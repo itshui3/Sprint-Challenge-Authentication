@@ -5,6 +5,7 @@ module.exports = {
   findById, // findById(id)
   findByUsername, // findByUsername(username)
   registerUser, // registerUser(user)
+  removeAllUsers
 }
 
 function find() {
@@ -22,6 +23,10 @@ function findByUsername(username) {
 function registerUser(user) {
   return db('users').insert(user)
     .then( ids => {
-      return db('users').where({ id: ids[0] })
+      return findById(ids[0])
     })
+}
+
+function removeAllUsers() {
+  return db('users').del();
 }
