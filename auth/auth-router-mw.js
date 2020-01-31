@@ -31,7 +31,6 @@ function reg_check_preexist(req, res, next) {
       if(!resou) {
         console.log(!resou);
         req.body.password = bcryptjs.hashSync(req.body.password, 5);
-        console.log(req.body);
         next();
       } else {
         res.status(409).json({ message: `status 409: user preexists` })
@@ -48,7 +47,8 @@ function log_check_creds(req, res, next) {
   if(req.body && req.body.username && req.body.password) {
     authDb.findByUsername(req.body.username)
       .then( resou => {
-        if(!!resou) {
+        console.log(resou);
+        if(resou) {
           if(bcryptjs.compareSync(req.body.password, resou.password)) {
             next();
           } else {
@@ -58,8 +58,11 @@ function log_check_creds(req, res, next) {
           res.status(401).json({ message: `user does not exist` })
         }
       })
+      .catch( err => {
+        res.status(400).json({ message: `wrong user`})
+      })
   } else {
     res.status(400).json({ message: `check credentials or URL, needs a username and password to login` })
   }
-  next();
+
 }
