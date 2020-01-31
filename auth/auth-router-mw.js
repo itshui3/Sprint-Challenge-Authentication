@@ -50,13 +50,6 @@ function log_check_creds(req, res, next) {
       .then( resou => {
         if(!!resou) {
           if(bcryptjs.compareSync(req.body.password, resou.password)) {
-            const payload = {
-              username: req.body.username
-            }
-            const secret = process.env.SECRET;
-            const token = jwt.sign(payload, secret);
-            req.token = token;
-            console.log(token, 'hey');
             next();
           } else {
             res.status(401).json({ message: `you need grammarly for passwords, brah?` })
