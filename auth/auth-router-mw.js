@@ -47,7 +47,6 @@ function log_check_creds(req, res, next) {
   if(req.body && req.body.username && req.body.password) {
     authDb.findByUsername(req.body.username)
       .then( resou => {
-        console.log(resou);
         if(resou) {
           if(bcryptjs.compareSync(req.body.password, resou.password)) {
             next();
