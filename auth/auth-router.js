@@ -1,5 +1,7 @@
+require('dotenv').config();
 const router = require('express').Router();
 const authDb = require('./auth-model');
+const jwt = require('jsonwebtoken');
 // mw
 const mw = require('./auth-router-mw');
 
@@ -15,8 +17,13 @@ router.post('/register', ...mw.reg_mw, (req, res) => {
     })
 });
 
-router.post('/login', (req, res) => {
-  // implement login
+router.post('/login', ...mw.log_mw, (req, res) => {
+  const payload = {
+    username: req.body.username
+  }
+  const secret = process.env.SECRET;
+  const token = jwt.sign(payload, secret);
+  res.status(200).json({ message: `logged in`, token: token })
 });
 
 router.get('/', (req, res) => {

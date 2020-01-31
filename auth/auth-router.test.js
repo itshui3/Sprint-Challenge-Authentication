@@ -27,4 +27,8 @@ describe('auth block', () => {
     expect(res.body.resource.username).toBe('hooi');
     expect(res.body.resource.password).not.toBe('booi');
   })
+
+  describe('it logs user in', () => {
+    
+  })
 })
