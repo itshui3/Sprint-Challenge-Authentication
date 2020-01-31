@@ -10,9 +10,9 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
 
   if(req.headers && req.headers.authorization) {
-    console.log(req.headers)
+    console.log(req.headers.authorization);
     const validity = jwt.verify(req.headers.authorization, process.env.SECRET);
-    console.log(validity);
+
     if(validity) {
       next();
     } else {
