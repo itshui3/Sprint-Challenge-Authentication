@@ -23,7 +23,7 @@ router.post('/login', ...mw.log_mw, (req, res) => {
   }
   const secret = process.env.SECRET;
   const token = jwt.sign(payload, secret);
-  res.status(200).json({ message: `logged in`, token: token })
+  res.status(200).json({ message: `ok ok, I see you`, token: token })
 });
 
 router.get('/', (req, res) => {
